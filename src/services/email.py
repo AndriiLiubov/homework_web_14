@@ -7,18 +7,19 @@ from fastapi_mail.errors import ConnectionErrors
 from pydantic import EmailStr
 
 from src.services.auth import auth_service
+from src.conf.config import settings
 
-load_dotenv()
+# load_dotenv()
 
-email_from = os.environ.get('MAIL_FROM')
-email_port = int(os.environ.get('MAIL_PORT'))
+email_from = settings.MAIL_FROM
+email_port = settings.MAIL_PORT
 
 conf = ConnectionConfig(
-    MAIL_USERNAME=os.environ.get('MAIL_USERNAME'),
-    MAIL_PASSWORD=os.environ.get('MAIL_PASSWORD'),
+    MAIL_USERNAME=settings.MAIL_USERNAME,
+    MAIL_PASSWORD=settings.MAIL_PASSWORD,
     MAIL_FROM=email_from,
     MAIL_PORT=email_port,
-    MAIL_SERVER=os.environ.get('MAIL_SERVER'),
+    MAIL_SERVER=settings.MAIL_SERVER,
     MAIL_FROM_NAME="Check-check",
     MAIL_STARTTLS=False,
     MAIL_SSL_TLS=True,

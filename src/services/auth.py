@@ -13,11 +13,12 @@ from sqlalchemy.orm import Session
 
 from src.database.db import get_db
 from src.repository import users as repository_users
+from src.conf.config import settings
 
-load_dotenv()
+# load_dotenv()
 
-redis_host = os.environ.get('REDIS_DOMAIN')
-redis_port = int(os.environ.get('REDIS_PORT'))
+redis_host = settings.REDIS_DOMAIN
+redis_port = settings.REDIS_PORT
 
 
 class Auth:
@@ -35,8 +36,8 @@ class Auth:
         r (redis.Redis): The Redis client instance for caching user data.
     """
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-    SECRET_KEY = os.environ.get('SECRET_KEY_JWT')
-    ALGORITHM = os.environ.get('ALGORITHM')
+    SECRET_KEY = settings.SECRET_KEY_JWT
+    ALGORITHM = settings.ALGORITHM
     oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
     r = redis.Redis(host=redis_host, port=redis_port, db=0)
 
